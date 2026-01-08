@@ -63,7 +63,7 @@ body{
 @keyframes breath{50%{transform:scale(1.015)}}
 
 h1{font-family:'Great Vibes'; font-size:64px;color:#b03065;}
-h2{font-weight:300;}
+h2{font-weight:300}
 
 /* TIMER */
 .timer{font-size:28px; margin:35px 0; animation:glow 2s infinite alternate;}
@@ -115,40 +115,6 @@ button:disabled{opacity:.5}
   <button onclick="startSite()">Enter My World ✨</button>
 </div>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b78e31f14.mp3">
-</audio>
-
-<audio id="penSound" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_5ff61ebc07.mp3">
-</audio>
-
-<script>
-function startSite(){
-  entry.style.display="none";
-  music.volume=0;
-  music.play();
-  let v=0;
-  const fade=setInterval(()=>{v+=.02; music.volume=v;if(v>=.6) clearInterval(fade)},100);
-
-  // Decor
-  for(let i=0;i<10;i++){
-    let b=document.createElement("div"); b.className="balloon";
-    b.style.left=Math.random()*100+"vw";
-    b.style.animationDuration=12+Math.random()*10+"s";
-    document.body.appendChild(b);
-  }
-  ["💖","🎈","✨","💗","🎊"].forEach(e=>{
-    for(let i=0;i<6;i++){
-      let f=document.createElement("div"); f.className="float"; f.textContent=e;
-      f.style.left=Math.random()*100+"vw";
-      f.style.animationDuration=8+Math.random()*10+"s";
-      document.body.appendChild(f);
-    }
-  });
-}
-</script>
-
 <div class="container">
 <div class="glass">
 
@@ -185,17 +151,41 @@ function startSite(){
 </div>
 
 <script>
+// ------------------ ENTRY & DECOR ------------------
+function startSite(){
+  entry.style.display="none";
+
+  // balloons
+  for(let i=0;i<10;i++){
+    let b=document.createElement("div"); b.className="balloon";
+    b.style.left=Math.random()*100+"vw";
+    b.style.animationDuration=12+Math.random()*10+"s";
+    document.body.appendChild(b);
+  }
+  ["💖","🎈","✨","💗","🎊"].forEach(e=>{
+    for(let i=0;i<6;i++){
+      let f=document.createElement("div"); f.className="float"; f.textContent=e;
+      f.style.left=Math.random()*100+"vw";
+      f.style.animationDuration=8+Math.random()*10+"s";
+      document.body.appendChild(f);
+    }
+  });
+}
+
+// ------------------ TIMER ------------------
 const preview=new URLSearchParams(location.search).get("preview")==="true";
 const birthday=new Date("2026-04-18T00:00:00");
 function updateTimer(){
- if(preview){timer.innerText="Preview Mode — Unlocked 💖"; birthdayBtn.disabled=false; return;}
- let d=birthday-new Date();
- if(d<=0){timer.innerText="It's your birthday 💕"; birthdayBtn.disabled=false; return;}
- let days=Math.floor(d/86400000); d%=86400000; let h=Math.floor(d/3600000); d%=3600000; let m=Math.floor(d/60000); let s=Math.floor((d%60000)/1000);
- timer.innerText=`${days} Days ${h} Hours ${m} Minutes ${s} Seconds`;
+  if(preview){timer.innerText="Preview Mode — Unlocked 💖"; birthdayBtn.disabled=false; return;}
+  let d=birthday-new Date();
+  if(d<=0){timer.innerText="It's your birthday 💕"; birthdayBtn.disabled=false; return;}
+  let days=Math.floor(d/86400000); d%=86400000; let h=Math.floor(d/3600000);
+  d%=3600000; let m=Math.floor(d/60000); let s=Math.floor((d%60000)/1000);
+  timer.innerText=`${days} Days ${h} Hours ${m} Minutes ${s} Seconds`;
 }
 setInterval(updateTimer,1000); updateTimer();
 
+// ------------------ JAR ------------------
 const quotes=[
 "You are my favorite miracle.",
 "Your smile is my peace.",
@@ -203,18 +193,17 @@ const quotes=[
 "You are poetry alive.",
 "My heart chose you forever."
 ];
-
 function openJar(){
  lid.classList.add("open");
  chitArea.innerHTML=`<div class="chit">${quotes[new Date().getDate()%quotes.length]}</div>`;
 }
 
-// 💌 Typing love letter with pen sound
+// ------------------ LOVE LETTER ------------------
 let i=0;
 const typedText=document.getElementById("typedText");
 const cursor=document.querySelector(".cursor");
 const surpriseBtn=document.getElementById("surpriseBtn");
-const penSound=document.getElementById("penSound");
+
 const loveLetter=`
 My sweetest Motto ❤️,
 
@@ -231,26 +220,25 @@ Happy Birthday, my love 💫
 `;
 
 function typeLetter(){
- if(i===0){penSound.volume=0.3; penSound.play().catch(()=>{});}
  if(i<loveLetter.length){
    typedText.innerHTML+=loveLetter.charAt(i);
    i++;
    setTimeout(typeLetter,40);
  }else{
-   penSound.pause(); penSound.currentTime=0;
    cursor.style.display="none";
    surpriseBtn.classList.remove("hidden");
-   if(preview) surpriseBtn.classList.remove("hidden");
  }
 }
 
-// Hook typing into birthday
-const originalShowBirthday=showBirthday;
-showBirthday=function(){
+// ------------------ HOOK BIRTHDAY BUTTON ------------------
+const birthdaySection=document.getElementById("birthdaySection");
+const originalShowBirthday=function(){
  birthdaySection.classList.remove("hidden");
  typeLetter();
-}
+};
+function showBirthday(){ originalShowBirthday(); }
 
+// ------------------ SURPRISE ------------------
 const surprises=[
 "Brand new suit — check the almirah 😉",
 "Cute soft toy — in your bag 🧸",
@@ -258,7 +246,6 @@ const surprises=[
 "Love letter on your phone cover 📱",
 "Lifetime supply of love & hugs ♾️"
 ];
-
 function showSurprise(){
  surpriseSection.classList.remove("hidden");
  surprises.forEach((s,i)=>{
@@ -271,7 +258,6 @@ function showSurprise(){
    </div>`;
  });
 }
-
 function checkAll(){
  if(document.querySelectorAll(".card.flip").length===5)
    thankyou.classList.remove("hidden");
