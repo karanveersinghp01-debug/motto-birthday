@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Motto ❤️</title>
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
+  overflow-x:hidden;
+  text-align:center;
+  color:#8b3a62;
+}
+h1,h2{font-weight:600}
+.container{padding:40px}
+.hidden{display:none}
+
+.timer{
+  font-size:32px;
+  margin-top:20px;
+  animation:fade 2s infinite alternate;
+}
+
+@keyframes fade{
+  from{opacity:.6}
+  to{opacity:1}
+}
+
+/* Balloons */
+.balloon{
+  position:fixed;
+  bottom:-100px;
+  width:60px;
+  height:80px;
+  background:pink;
+  border-radius:50%;
+  animation:float 8s infinite;
+  opacity:.5;
+}
+@keyframes float{
+  to{transform:translateY(-120vh)}
+}
+
+/* Jar */
+.jar{
+  width:150px;
+  height:200px;
+  border:4px solid #e89ab7;
+  border-radius:0 0 40px 40px;
+  margin:40px auto;
+  position:relative;
+}
+.chit{
+  background:#fff;
+  color:#8b3a62;
+  padding:15px;
+  width:200px;
+  margin:auto;
+  border-radius:10px;
+  animation:slideUp 1s ease;
+}
+@keyframes slideUp{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+button{
+  background:#ff85b3;
+  border:none;
+  padding:12px 25px;
+  color:white;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:20px;
+}
+button:disabled{opacity:.5}
+
+/* Cards */
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.card{
+  width:220px;
+  height:140px;
+  perspective:1000px;
+}
+.card-inner{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 1s;
+}
+.card.flip .card-inner{transform:rotateY(180deg)}
+.face{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+.front{background:#ffc2da}
+.back{
+  background:white;
+  transform:rotateY(180deg);
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Welcome Motto 💖</h1>
+
+<div class="timer" id="timer"></div>
+
+<div class="jar"></div>
+<button onclick="openJar()">Open this to see what Karan thinks of you</button>
+<div id="chit"></div>
+
+<button id="birthdayBtn" disabled onclick="showBirthday()">🎂 Open Birthday Message</button>
+
+<div id="birthday" class="hidden">
+<h1>🎉 Happy Birthday My Love 🎉</h1>
+<p>
+From the moment you came into my life, everything became softer, warmer and more meaningful.
+You are my peace, my madness, my forever.
+</p>
+<button onclick="showSurprise()">Surprise 🎁</button>
+</div>
+
+<div id="surprise" class="hidden">
+<h2>You are bound to open all 5 💕</h2>
+<div class="cards" id="cards"></div>
+<h1 id="thankyou" class="hidden">Thank You ❤️</h1>
+</div>
+
+</div>
+
+<script>
+const birthday=new Date("2026-04-18T00:00:00");
+const quotes=[
+"You are effortlessly beautiful, inside and out.",
+"Every smile of yours feels like home.",
+"You matter to me more than words can ever explain.",
+"Your existence makes my world brighter.",
+"I fall in love with you a little more every day."
+];
+
+function updateTimer(){
+  const now=new Date();
+  const diff=birthday-now;
+  const days=Math.floor(diff/(1000*60*60*24));
+  document.getElementById("timer").innerHTML=
+   diff>0?`${days} days left for your birthday 🎀`:"It's your birthday ❤️";
+  if(diff<=0)document.getElementById("birthdayBtn").disabled=false;
+}
+setInterval(updateTimer,1000);
+
+function openJar(){
+  const q=quotes[new Date().getDate()%quotes.length];
+  document.getElementById("chit").innerHTML=`<div class="chit">${q}</div>`;
+}
+
+function showBirthday(){
+  document.getElementById("birthday").classList.remove("hidden");
+}
+
+const surprises=[
+"Congrats you won yourself a brand new suit. And Gilli Gilli chuu. Open the almirah its in it.",
+"Congratulations you won yourself a cute soft toy. Abra Kadabra, Its in your bag.",
+"Congratulations you won yourself an ornament box. Say you love me 3 times in heart and open the drawer.",
+"Congratulation you got a love letter from your soon to be husband and that is your phone cover.",
+"Congratulation you won yourself lifetime subscription of happiness, unlimited hugs, kisses and love."
+];
+
+function showSurprise(){
+ document.getElementById("surprise").classList.remove("hidden");
+ const c=document.getElementById("cards");
+ surprises.forEach((s,i)=>{
+  c.innerHTML+=`
+  <div class="card" onclick="this.classList.add('flip');checkAll()">
+    <div class="card-inner">
+      <div class="face front">Option ${i+1}</div>
+      <div class="face back">${s}</div>
+    </div>
+  </div>`;
+ });
+}
+
+function checkAll(){
+ if(document.querySelectorAll(".card.flip").length===5)
+ document.getElementById("thankyou").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
