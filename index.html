@@ -185,17 +185,42 @@ function updateTimer(){
 }
 setInterval(updateTimer,1000); updateTimer();
 
-// ------------------ JAR ------------------
-const quotes=[
-"You are my favorite miracle.",
-"Your smile is my peace.",
-"You make love feel easy.",
-"You are poetry alive.",
-"My heart chose you forever."
+// ------------------ 100 QUOTES ------------------
+const quotes = [
+"1. You are my favorite miracle.","2. Your smile is my peace.","3. You make love feel easy.","4. You are poetry alive.","5. My heart chose you forever.",
+"6. Every moment with you is magic.","7. Your laugh is my favorite melody.","8. I fall for you every single day.","9. You are my sunshine in every storm.","10. With you, life is a dream.",
+"11. Your eyes are my home.","12. You are my heart's compass.","13. I love you more than words can say.","14. Being with you feels like forever.","15. You make my soul dance.",
+"16. You are my sweetest addiction.","17. My love for you knows no limits.","18. Your happiness is my purpose.","19. I choose you in every lifetime.","20. You are my heart's melody.",
+"21. My world starts with your smile.","22. I treasure every moment with you.","23. You are my forever and always.","24. Your love makes me whole.","25. Every heartbeat says your name.",
+"26. You are the art of my life.","27. With you, everything shines brighter.","28. You are my endless inspiration.","29. I am yours completely.","30. You complete the colors of my soul.",
+"31. You are my dream come true.","32. Loving you is my destiny.","33. You are my sweetest thought.","34. My love grows every day for you.","35. You make my heart race with joy.",
+"36. You are my sunshine and my moonlight.","37. I adore everything about you.","38. You are my reason for smiling.","39. My heart beats in rhythm with yours.","40. You are my precious gem.",
+"41. I am lost in your love.","42. Every day with you is my favorite.","43. You are my magic and wonder.","44. You are the poetry in my heart.","45. I love your soul, your mind, your heart.",
+"46. You are my universe.","47. I am enchanted by your love.","48. You are my sweet escape.","49. I would cross galaxies for you.","50. My love for you is infinite.",
+"51. You are my heartbeat.","52. You make every day brighter.","53. I am devoted to you always.","54. You are my sweetest fantasy.","55. I cannot imagine life without you.",
+"56. You are my sunshine on cloudy days.","57. I am mesmerized by your beauty.","58. You are my angel on Earth.","59. I live for your smile.","60. You are my perfect harmony.",
+"61. I am yours forever and always.","62. You are my guiding star.","63. Every thought of you warms my heart.","64. You are my treasure.","65. I adore every little thing about you.",
+"66. You are my muse.","67. I am addicted to your love.","68. You make me a better person.","69. You are my peace.","70. I am blessed to love you.",
+"71. You are my heart's desire.","72. I love every part of you.","73. You are my favorite hello and hardest goodbye.","74. You are my universe in a glance.","75. I cherish you endlessly.",
+"76. You are my sweetest companion.","77. I am captivated by you.","78. You are my dream realized.","79. You make my heart sing.","80. You are my endless love.",
+"81. I am enchanted by your smile.","82. You are my shining light.","83. I am yours, completely.","84. You are my beautiful forever.","85. I love your soul.",
+"86. You are my heartbeat's rhythm.","87. I am intoxicated by your love.","88. You are my sweetest addiction.","89. I would choose you always.","90. You are my everything.",
+"91. I adore you endlessly.","92. You are my guiding light.","93. I am bewitched by your charm.","94. You are my sweetest dream.","95. I live for your love.",
+"96. You are my perfect love story.","97. I am yours, eternally.","98. You are my star in the night sky.","99. I am enchanted by your presence.","100. I am devoted to you completely."
 ];
+
+let shownQuotes = JSON.parse(localStorage.getItem("shownQuotes") || "[]");
+
 function openJar(){
- lid.classList.add("open");
- chitArea.innerHTML=`<div class="chit">${quotes[new Date().getDate()%quotes.length]}</div>`;
+  let remainingQuotes = quotes.filter(q => !shownQuotes.includes(q));
+  if(remainingQuotes.length === 0){
+    shownQuotes = []; 
+    remainingQuotes = [...quotes];
+  }
+  let todayQuote = remainingQuotes[Math.floor(Math.random()*remainingQuotes.length)];
+  chitArea.innerHTML = `<div class="chit">${todayQuote}</div>`;
+  shownQuotes.push(todayQuote);
+  localStorage.setItem("shownQuotes", JSON.stringify(shownQuotes));
 }
 
 // ------------------ LOVE LETTER ------------------
@@ -230,15 +255,17 @@ function typeLetter(){
  }
 }
 
-// ------------------ HOOK BIRTHDAY BUTTON ------------------
+// ------------------ BIRTHDAY BUTTON ------------------
 const birthdaySection=document.getElementById("birthdaySection");
-const originalShowBirthday=function(){
+function showBirthday(){ 
  birthdaySection.classList.remove("hidden");
  typeLetter();
-};
-function showBirthday(){ originalShowBirthday(); }
+}
 
 // ------------------ SURPRISE ------------------
+const surpriseSection=document.getElementById("surpriseSection");
+const cards=document.getElementById("cards");
+const thankyou=document.getElementById("thankyou");
 const surprises=[
 "Brand new suit — check the almirah 😉",
 "Cute soft toy — in your bag 🧸",
@@ -246,8 +273,10 @@ const surprises=[
 "Love letter on your phone cover 📱",
 "Lifetime supply of love & hugs ♾️"
 ];
+
 function showSurprise(){
  surpriseSection.classList.remove("hidden");
+ cards.innerHTML="";
  surprises.forEach((s,i)=>{
    cards.innerHTML+=`
    <div class="card" onclick="this.classList.add('flip');checkAll()">
@@ -258,6 +287,7 @@ function showSurprise(){
    </div>`;
  });
 }
+
 function checkAll(){
  if(document.querySelectorAll(".card.flip").length===5)
    thankyou.classList.remove("hidden");
