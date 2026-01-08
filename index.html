@@ -2,87 +2,148 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Motto ❤️</title>
+<title>For Motto 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#ffe6f2,#ffcde3,#ffb6d5);
   font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
   overflow-x:hidden;
-  text-align:center;
-  color:#8b3a62;
-}
-h1,h2{font-weight:600}
-.container{padding:40px}
-.hidden{display:none}
-
-.timer{
-  font-size:32px;
-  margin-top:20px;
-  animation:fade 2s infinite alternate;
+  color:#6b2c4d;
 }
 
-@keyframes fade{
-  from{opacity:.6}
-  to{opacity:1}
+/* Sparkles */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(#fff 1px, transparent 1px);
+  background-size:60px 60px;
+  opacity:.2;
+  animation:twinkle 6s infinite alternate;
+  pointer-events:none;
+}
+@keyframes twinkle{
+  to{opacity:.35}
 }
 
-/* Balloons */
-.balloon{
+/* Floating hearts & balloons */
+.float{
   position:fixed;
   bottom:-100px;
-  width:60px;
-  height:80px;
-  background:pink;
-  border-radius:50%;
-  animation:float 8s infinite;
-  opacity:.5;
+  font-size:24px;
+  animation:floatUp linear infinite;
+  opacity:.6;
 }
-@keyframes float{
+@keyframes floatUp{
   to{transform:translateY(-120vh)}
+}
+
+.container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+}
+
+.glass{
+  max-width:900px;
+  width:100%;
+  background:rgba(255,255,255,.35);
+  backdrop-filter:blur(18px);
+  border-radius:30px;
+  box-shadow:0 25px 60px rgba(255,130,180,.35);
+  padding:50px;
+  text-align:center;
+}
+
+/* Headings */
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:64px;
+  margin:0;
+  color:#b03065;
+}
+h2{
+  margin-top:10px;
+  font-weight:300;
+}
+
+/* Timer */
+.timer{
+  font-size:30px;
+  margin:30px 0;
+  animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+  to{text-shadow:0 0 20px #ff9ecf}
 }
 
 /* Jar */
 .jar{
-  width:150px;
-  height:200px;
-  border:4px solid #e89ab7;
-  border-radius:0 0 40px 40px;
+  width:180px;
+  height:230px;
   margin:40px auto;
+  border:4px solid #e88bb6;
+  border-radius:0 0 45px 45px;
   position:relative;
+  background:rgba(255,255,255,.2);
+  animation:wiggle 4s infinite;
 }
-.chit{
-  background:#fff;
-  color:#8b3a62;
-  padding:15px;
-  width:200px;
-  margin:auto;
-  border-radius:10px;
-  animation:slideUp 1s ease;
-}
-@keyframes slideUp{
-  from{transform:translateY(40px);opacity:0}
-  to{transform:translateY(0);opacity:1}
+@keyframes wiggle{
+  0%,100%{transform:rotate(0)}
+  50%{transform:rotate(1deg)}
 }
 
+.chit{
+  width:260px;
+  background:#fff7fb;
+  padding:20px;
+  border-radius:12px;
+  margin:20px auto;
+  box-shadow:0 10px 20px rgba(0,0,0,.15);
+  animation:unfold 1s ease;
+}
+@keyframes unfold{
+  from{transform:scaleY(.2);opacity:0}
+  to{transform:scaleY(1);opacity:1}
+}
+
+/* Buttons */
 button{
-  background:#ff85b3;
+  background:linear-gradient(135deg,#ff6fae,#ff9ecf);
   border:none;
-  padding:12px 25px;
+  padding:14px 30px;
+  border-radius:30px;
   color:white;
-  border-radius:25px;
   font-size:16px;
   cursor:pointer;
-  margin-top:20px;
+  box-shadow:0 10px 25px rgba(255,110,170,.45);
+  transition:.3s;
 }
+button:hover{transform:scale(1.05)}
 button:disabled{opacity:.5}
 
-/* Cards */
-.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+/* Hidden */
+.hidden{display:none}
+
+/* Surprise Cards */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+  margin-top:30px;
+}
 .card{
-  width:220px;
-  height:140px;
-  perspective:1000px;
+  width:240px;
+  height:150px;
+  perspective:1200px;
 }
 .card-inner{
   width:100%;
@@ -91,103 +152,140 @@ button:disabled{opacity:.5}
   transform-style:preserve-3d;
   transition:transform 1s;
 }
-.card.flip .card-inner{transform:rotateY(180deg)}
+.card.flip .card-inner{
+  transform:rotateY(180deg);
+}
 .face{
   position:absolute;
-  width:100%;
-  height:100%;
-  backface-visibility:hidden;
-  border-radius:15px;
+  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:15px;
+  padding:18px;
+  backface-visibility:hidden;
+  border-radius:18px;
 }
-.front{background:#ffc2da}
+.front{
+  background:linear-gradient(135deg,#ffd1e8,#ffaad4);
+}
 .back{
   background:white;
   transform:rotateY(180deg);
+}
+#thankyou{
+  margin-top:40px;
+  font-family:'Great Vibes',cursive;
+  font-size:52px;
+}
+
+/* Birthday Glow */
+.birthday{
+  animation:burst 1.5s ease;
+}
+@keyframes burst{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 </style>
 </head>
 
 <body>
+
+<!-- Floating decorations -->
+<script>
+const icons=["💖","🎈","✨","💗","🫧"];
+for(let i=0;i<25;i++){
+ const f=document.createElement("div");
+ f.className="float";
+ f.innerText=icons[Math.floor(Math.random()*icons.length)];
+ f.style.left=Math.random()*100+"vw";
+ f.style.animationDuration=8+Math.random()*10+"s";
+ document.body.appendChild(f);
+}
+</script>
+
 <div class="container">
+<div class="glass">
 
 <h1>Welcome Motto 💖</h1>
+<h2>A little magic prepared by Karan</h2>
 
-<div class="timer" id="timer"></div>
+<div id="timer" class="timer"></div>
 
 <div class="jar"></div>
-<button onclick="openJar()">Open this to see what Karan thinks of you</button>
-<div id="chit"></div>
+
+<button onclick="openJar()">Open this to what Karan thinks of you</button>
+<div id="chitArea"></div>
 
 <button id="birthdayBtn" disabled onclick="showBirthday()">🎂 Open Birthday Message</button>
 
-<div id="birthday" class="hidden">
-<h1>🎉 Happy Birthday My Love 🎉</h1>
+<div id="birthdaySection" class="hidden birthday">
+<h1>Happy Birthday My Love 💫</h1>
 <p>
-From the moment you came into my life, everything became softer, warmer and more meaningful.
-You are my peace, my madness, my forever.
+You are my miracle, my calm, my excitement, my forever.  
+With you, love feels effortless and eternal.
 </p>
 <button onclick="showSurprise()">Surprise 🎁</button>
 </div>
 
-<div id="surprise" class="hidden">
+<div id="surpriseSection" class="hidden">
 <h2>You are bound to open all 5 💕</h2>
 <div class="cards" id="cards"></div>
 <h1 id="thankyou" class="hidden">Thank You ❤️</h1>
 </div>
 
 </div>
+</div>
 
 <script>
 const birthday=new Date("2026-04-18T00:00:00");
 const quotes=[
-"You are effortlessly beautiful, inside and out.",
-"Every smile of yours feels like home.",
-"You matter to me more than words can ever explain.",
-"Your existence makes my world brighter.",
-"I fall in love with you a little more every day."
+"You are poetry written by the universe itself.",
+"Your beauty begins where my words fail.",
+"Your existence is my greatest blessing.",
+"You are my favorite feeling.",
+"Loving you is the easiest thing I have ever done."
 ];
 
 function updateTimer(){
-  const now=new Date();
-  const diff=birthday-now;
-  const days=Math.floor(diff/(1000*60*60*24));
-  document.getElementById("timer").innerHTML=
-   diff>0?`${days} days left for your birthday 🎀`:"It's your birthday ❤️";
-  if(diff<=0)document.getElementById("birthdayBtn").disabled=false;
+ const now=new Date();
+ const diff=birthday-now;
+ const days=Math.floor(diff/(1000*60*60*24));
+ document.getElementById("timer").innerText=
+ diff>0?`${days} days left for your birthday ✨`:"It's your birthday 💖";
+ if(diff<=0)document.getElementById("birthdayBtn").disabled=false;
 }
 setInterval(updateTimer,1000);
+updateTimer();
 
 function openJar(){
-  const q=quotes[new Date().getDate()%quotes.length];
-  document.getElementById("chit").innerHTML=`<div class="chit">${q}</div>`;
+ const q=quotes[new Date().getDate()%quotes.length];
+ document.getElementById("chitArea").innerHTML=
+ `<div class="chit">${q}</div>`;
 }
 
 function showBirthday(){
-  document.getElementById("birthday").classList.remove("hidden");
+ document.getElementById("birthdaySection").classList.remove("hidden");
 }
 
 const surprises=[
 "Congrats you won yourself a brand new suit. And Gilli Gilli chuu. Open the almirah its in it.",
 "Congratulations you won yourself a cute soft toy. Abra Kadabra, Its in your bag.",
-"Congratulations you won yourself an ornament box. Say you love me 3 times in heart and open the drawer.",
+"Congratulations you won yourself an ornament box. Say you love me 3 times in heart and open the drawer of your table.",
 "Congratulation you got a love letter from your soon to be husband and that is your phone cover.",
-"Congratulation you won yourself lifetime subscription of happiness, unlimited hugs, kisses and love."
+"Congratulation you won yourself lifetime subscription of happiness, non stop care and ultra infinite unlimited hugs, kisses and love."
 ];
 
 function showSurprise(){
- document.getElementById("surprise").classList.remove("hidden");
+ document.getElementById("surpriseSection").classList.remove("hidden");
  const c=document.getElementById("cards");
  surprises.forEach((s,i)=>{
   c.innerHTML+=`
   <div class="card" onclick="this.classList.add('flip');checkAll()">
-    <div class="card-inner">
-      <div class="face front">Option ${i+1}</div>
-      <div class="face back">${s}</div>
-    </div>
+   <div class="card-inner">
+    <div class="face front">Option ${i+1}</div>
+    <div class="face back">${s}</div>
+   </div>
   </div>`;
  });
 }
@@ -197,5 +295,6 @@ function checkAll(){
  document.getElementById("thankyou").classList.remove("hidden");
 }
 </script>
+
 </body>
 </html>
