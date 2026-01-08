@@ -17,6 +17,22 @@ body{
   color:#6b2c4d;
 }
 
+/* ENTRY SCREEN */
+#entry{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#ffd1e8,#ffb6d5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  flex-direction:column;
+}
+#entry button{
+  padding:16px 36px;
+  font-size:18px;
+}
+
 /* Sparkles */
 body::before{
   content:"";
@@ -24,19 +40,17 @@ body::before{
   inset:0;
   background-image:radial-gradient(#fff 1px, transparent 1px);
   background-size:60px 60px;
-  opacity:.2;
+  opacity:.25;
   animation:twinkle 6s infinite alternate;
   pointer-events:none;
 }
-@keyframes twinkle{
-  to{opacity:.35}
-}
+@keyframes twinkle{to{opacity:.4}}
 
-/* Floating hearts & balloons */
+/* Floating decorations */
 .float{
   position:fixed;
   bottom:-100px;
-  font-size:24px;
+  font-size:26px;
   animation:floatUp linear infinite;
   opacity:.6;
 }
@@ -52,148 +66,133 @@ body::before{
 }
 
 .glass{
-  max-width:900px;
+  max-width:950px;
   width:100%;
   background:rgba(255,255,255,.35);
-  backdrop-filter:blur(18px);
-  border-radius:30px;
+  backdrop-filter:blur(20px);
+  border-radius:35px;
   box-shadow:0 25px 60px rgba(255,130,180,.35);
-  padding:50px;
+  padding:60px 50px;
   text-align:center;
 }
 
-/* Headings */
 h1{
   font-family:'Great Vibes',cursive;
   font-size:64px;
   margin:0;
   color:#b03065;
 }
-h2{
-  margin-top:10px;
-  font-weight:300;
-}
+h2{font-weight:300}
 
 /* Timer */
 .timer{
   font-size:30px;
-  margin:30px 0;
+  margin:35px 0;
   animation:glow 2s infinite alternate;
 }
-@keyframes glow{
-  to{text-shadow:0 0 20px #ff9ecf}
-}
+@keyframes glow{to{text-shadow:0 0 25px #ff9ecf}}
 
-/* Jar */
+/* JAR */
+.jar-wrapper{position:relative;width:200px;margin:50px auto;}
+.jar-lid{
+  width:140px;height:26px;
+  background:linear-gradient(#f5a6cb,#de6e9c);
+  border-radius:14px 14px 6px 6px;
+  margin:0 auto 4px;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  transform-origin:left bottom;
+  transition:transform 1s ease;
+}
+.jar-lid.open{transform:rotate(-40deg) translate(-20px,-10px)}
+
 .jar{
-  width:180px;
-  height:230px;
-  margin:40px auto;
-  border:4px solid #e88bb6;
-  border-radius:0 0 45px 45px;
+  width:200px;height:270px;
+  border-radius:22px 22px 45px 45px;
+  background:rgba(255,255,255,.18);
+  border:2px solid rgba(255,255,255,.55);
+  box-shadow:
+    inset 0 0 30px rgba(255,255,255,.7),
+    inset 0 -25px 35px rgba(255,180,220,.45),
+    0 30px 60px rgba(255,120,180,.45);
   position:relative;
-  background:rgba(255,255,255,.2);
-  animation:wiggle 4s infinite;
+  backdrop-filter:blur(8px);
+  animation:jarFloat 5s ease-in-out infinite;
 }
-@keyframes wiggle{
-  0%,100%{transform:rotate(0)}
-  50%{transform:rotate(1deg)}
+@keyframes jarFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
+.glass-shine{
+  position:absolute;left:18px;top:18px;width:38px;height:215px;
+  background:linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,.5),rgba(255,255,255,0));
+  transform:skewX(-12deg);
+}
+.papers span{
+  position:absolute;width:65px;height:32px;background:#fff6fb;border-radius:6px;
+  top:62%;left:50%;opacity:.85;
+}
+.papers span:nth-child(1){transform:translate(-65px,-5px) rotate(-8deg)}
+.papers span:nth-child(2){transform:translate(-10px,-28px) rotate(5deg)}
+.papers span:nth-child(3){transform:translate(42px,12px) rotate(-4deg)}
 
-.chit{
-  width:260px;
-  background:#fff7fb;
-  padding:20px;
-  border-radius:12px;
-  margin:20px auto;
-  box-shadow:0 10px 20px rgba(0,0,0,.15);
-  animation:unfold 1s ease;
-}
-@keyframes unfold{
-  from{transform:scaleY(.2);opacity:0}
-  to{transform:scaleY(1);opacity:1}
-}
-
-/* Buttons */
 button{
   background:linear-gradient(135deg,#ff6fae,#ff9ecf);
-  border:none;
-  padding:14px 30px;
-  border-radius:30px;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(255,110,170,.45);
-  transition:.3s;
+  border:none;padding:14px 32px;border-radius:30px;
+  color:white;font-size:16px;cursor:pointer;
+  box-shadow:0 12px 28px rgba(255,110,170,.45);
 }
 button:hover{transform:scale(1.05)}
 button:disabled{opacity:.5}
 
-/* Hidden */
+.chit{
+  width:280px;background:#fff7fb;padding:22px;border-radius:14px;
+  margin:20px auto;
+  animation:chitOut 1.2s ease forwards;
+}
+@keyframes chitOut{
+  from{transform:translateY(70px) scale(.8);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
+}
 .hidden{display:none}
 
-/* Surprise Cards */
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:25px;
-  margin-top:30px;
-}
-.card{
-  width:240px;
-  height:150px;
-  perspective:1200px;
-}
-.card-inner{
-  width:100%;
-  height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform 1s;
-}
-.card.flip .card-inner{
-  transform:rotateY(180deg);
-}
-.face{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  backface-visibility:hidden;
-  border-radius:18px;
-}
-.front{
-  background:linear-gradient(135deg,#ffd1e8,#ffaad4);
-}
-.back{
-  background:white;
-  transform:rotateY(180deg);
-}
-#thankyou{
-  margin-top:40px;
-  font-family:'Great Vibes',cursive;
-  font-size:52px;
-}
+/* Cards */
+.cards{display:flex;flex-wrap:wrap;justify-content:center;gap:25px;margin-top:35px}
+.card{width:240px;height:150px;perspective:1200px}
+.card-inner{width:100%;height:100%;transition:1s;transform-style:preserve-3d}
+.card.flip .card-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:18px;border-radius:18px;backface-visibility:hidden}
+.front{background:linear-gradient(135deg,#ffd1e8,#ffaad4)}
+.back{background:white;transform:rotateY(180deg)}
 
-/* Birthday Glow */
-.birthday{
-  animation:burst 1.5s ease;
-}
-@keyframes burst{
-  from{transform:scale(.7);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
+#thankyou{font-family:'Great Vibes';font-size:54px;margin-top:40px}
 </style>
 </head>
 
 <body>
 
-<!-- Floating decorations -->
+<!-- ENTRY -->
+<div id="entry">
+  <h1>Welcome Motto 💖</h1>
+  <button onclick="startSite()">Tap to Enter ✨</button>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1b78e31f14.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-const icons=["💖","🎈","✨","💗","🫧"];
+const preview = new URLSearchParams(window.location.search).get("preview") === "true";
+
+function startSite(){
+ document.getElementById("entry").style.display="none";
+ document.getElementById("music").play();
+}
+</script>
+
+<script>
+const icons=["💖","✨","🎈","💗"];
 for(let i=0;i<25;i++){
  const f=document.createElement("div");
  f.className="float";
@@ -208,32 +207,26 @@ for(let i=0;i<25;i++){
 <div class="glass">
 
 <h1>Welcome Motto 💖</h1>
-<h2>A little magic prepared by Karan</h2>
+<h2>A fairy-tale by Karan</h2>
 
 <div id="timer" class="timer"></div>
 
 <div class="jar-wrapper">
-  <div class="jar-lid"></div>
+  <div id="lid" class="jar-lid"></div>
   <div class="jar">
     <div class="glass-shine"></div>
-    <div class="papers">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="papers"><span></span><span></span><span></span></div>
   </div>
 </div>
-
 
 <button onclick="openJar()">Open this to what Karan thinks of you</button>
 <div id="chitArea"></div>
 
 <button id="birthdayBtn" disabled onclick="showBirthday()">🎂 Open Birthday Message</button>
 
-<div id="birthdaySection" class="hidden birthday">
+<div id="birthdaySection" class="hidden">
 <h1>Happy Birthday My Love 💫</h1>
-<p>
-You are my miracle, my calm, my excitement, my forever.  
-With you, love feels effortless and eternal.
-</p>
+<p>You are my forever, my miracle, my favorite feeling.</p>
 <button onclick="showSurprise()">Surprise 🎁</button>
 </div>
 
@@ -249,28 +242,31 @@ With you, love feels effortless and eternal.
 <script>
 const birthday=new Date("2026-04-18T00:00:00");
 const quotes=[
-"You are poetry written by the universe itself.",
-"Your beauty begins where my words fail.",
-"Your existence is my greatest blessing.",
-"You are my favorite feeling.",
-"Loving you is the easiest thing I have ever done."
+"You are poetry written by the universe.",
+"Your smile is my safest place.",
+"You are my favorite miracle.",
+"Loving you feels like magic every day.",
+"My heart chose you forever."
 ];
 
 function updateTimer(){
- const now=new Date();
- const diff=birthday-now;
+ if(preview){
+   document.getElementById("timer").innerText="Preview Mode 💫";
+   document.getElementById("birthdayBtn").disabled=false;
+   return;
+ }
+ const diff=birthday-new Date();
  const days=Math.floor(diff/(1000*60*60*24));
  document.getElementById("timer").innerText=
  diff>0?`${days} days left for your birthday ✨`:"It's your birthday 💖";
  if(diff<=0)document.getElementById("birthdayBtn").disabled=false;
 }
-setInterval(updateTimer,1000);
-updateTimer();
+setInterval(updateTimer,1000);updateTimer();
 
 function openJar(){
+ document.getElementById("lid").classList.add("open");
  const q=quotes[new Date().getDate()%quotes.length];
- document.getElementById("chitArea").innerHTML=
- `<div class="chit">${q}</div>`;
+ document.getElementById("chitArea").innerHTML=`<div class="chit">${q}</div>`;
 }
 
 function showBirthday(){
@@ -278,11 +274,11 @@ function showBirthday(){
 }
 
 const surprises=[
-"Congrats you won yourself a brand new suit. And Gilli Gilli chuu. Open the almirah its in it.",
-"Congratulations you won yourself a cute soft toy. Abra Kadabra, Its in your bag.",
-"Congratulations you won yourself an ornament box. Say you love me 3 times in heart and open the drawer of your table.",
-"Congratulation you got a love letter from your soon to be husband and that is your phone cover.",
-"Congratulation you won yourself lifetime subscription of happiness, non stop care and ultra infinite unlimited hugs, kisses and love."
+"Congrats you won yourself a brand new suit. Gilli Gilli chuu!",
+"Cute soft toy — check your bag!",
+"Ornament box — say you love me 💖",
+"Love letter from your future husband 📱",
+"Lifetime subscription of love, hugs & kisses ♾️"
 ];
 
 function showSurprise(){
@@ -298,10 +294,9 @@ function showSurprise(){
   </div>`;
  });
 }
-
 function checkAll(){
  if(document.querySelectorAll(".card.flip").length===5)
- document.getElementById("thankyou").classList.remove("hidden");
+  document.getElementById("thankyou").classList.remove("hidden");
 }
 </script>
 
